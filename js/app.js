@@ -19,7 +19,7 @@ var app = {
 
         this.addEvents();
         this.readData();
-        //this.updateTodo();
+        this.updateTodo();
     },
 
     checkedInput: function (index, params) {
@@ -114,7 +114,7 @@ var app = {
 
         //generate Todo item
         app.generateElement(tempData);
-
+        app.updateTodo();
     }
     , allClick: function () {
         $("#todo-list").empty();
@@ -155,16 +155,14 @@ var app = {
         localStorage.setItem("todoData", dataStored);
         $("#todo-list").empty();
         this.readData();
+        app.updateTodo();
     },
 
     updateTodo: function () {
 
         $.each(data, function (index, params) {
-
             $("#" + params.id).change(function () {
-
                 if ($('#' + params.id).is(':checked')) {
-                    $("#clear-completed").show();
                     data[index].completed = true;
                     var dataStored = JSON.stringify(data);
                     localStorage.setItem("todoData", dataStored);
