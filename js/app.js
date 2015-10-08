@@ -1,8 +1,11 @@
 var app = {
 
-    var: data = []
+    var: data = [],
 
-    , readData: function () {
+    var: ENTER_KEY_CODE = 13,
+    var: BACKSPACE_KEY_CODE = 8,
+
+    readData: function () {
         data = JSON.parse(localStorage.getItem("todoData"));
         $.each(data, function (index, params) {
             if (data[index] != null) {
@@ -10,21 +13,22 @@ var app = {
                 app.checkedInput(index, params);
             }
         });
-    }
+    },
 
-    , initialize: function () {
+    initialize: function () {
 
         this.addEvents();
         this.readData();
-        this.updateTodo();
-    }
+        //this.updateTodo();
+    },
 
-    , checkedInput: function (index, params) {
+    checkedInput: function (index, params) {
         if (data[index].completed == true) {
             $("#" + params.id).prop('checked', true);
         }
-    }
-    , generateElement: function (params) {
+    },
+
+    generateElement: function (params) {
 
         var input = $(document.createElement('input'));
         input.prop('type', 'checkbox');
@@ -50,9 +54,9 @@ var app = {
             $("#footer").show();
         }
 
-    }
+    },
 
-    , addEvents: function () {
+    addEvents: function () {
 
         $("#footer").hide();
 
@@ -60,7 +64,7 @@ var app = {
 
         $(document).keypress(function (event) {
 
-            if (event.which === 13) {
+            if (event.which == ENTER_KEY_CODE) {
 
                 if ($("#new-todo").val().length == 0) {
                     $.alert({
@@ -87,19 +91,17 @@ var app = {
 
             if (charactersLeft == 0) {
                 $("#new-todo").keydown(function (event) {
-                    if (event.which != 8) {
-                        if (event.which != 13) {
-                            return false;
-                        }
+                    if (event.which != BACKSPACE_KEY_CODE && event.which != ENTER_KEY_CODE) {
+                        return false;
                     }
                 });
             } else if (charactersLeft == 20) {
                 $("#new-todo").unbind();
             }
         });
-    }
+    },
 
-    , addTodo: function () {
+    addTodo: function () {
 
         var name = $("#new-todo").val();
         var tempData = new todo(name);
@@ -120,18 +122,18 @@ var app = {
             app.generateElement(params);
             app.checkedInput(index, params);
         });
-    }
+    },
 
-    , activeClick: function () {
+    activeClick: function () {
         $("#todo-list").empty();
         $.each(data, function (index, params) {
             if (params.completed == false) {
                 app.generateElement(params);
             }
         });
-    }
+    },
 
-    , completedClick: function () {
+    completedClick: function () {
         $("#todo-list").empty();
         $.each(data, function (index, params) {
             if (params.completed == true) {
@@ -139,9 +141,9 @@ var app = {
                 app.checkedInput(index, params);
             }
         });
-    }
+    },
 
-    , deleteCompleted: function () {
+    deleteCompleted: function () {
         var result = [];
         $.each(data, function (index, params) {
             console.log(data[index].completed);
@@ -153,9 +155,9 @@ var app = {
         localStorage.setItem("todoData", dataStored);
         $("#todo-list").empty();
         this.readData();
-    }
+    },
 
-    , updateTodo: function () {
+    updateTodo: function () {
 
         $.each(data, function (index, params) {
 
