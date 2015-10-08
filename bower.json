@@ -1,0 +1,13 @@
+{
+  "name": "HelloWorld",
+  "version": "1.0",
+  "authors": [
+    "Maria"
+  ],
+  "description": "getting started kit",
+  "dependencies": {
+    "jquery": "latest",
+    "underscore":"latest",
+    "bootstrap": "latest"
+  }
+}
