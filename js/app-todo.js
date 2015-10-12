@@ -34,7 +34,7 @@ var appTodo = {
 
         appTodo.getDataFromPersistence();
         var result = _.reject(data, param);
-        appTodo.persistData(data);
+        appTodo.persistData(result);
     },
 
     update: function (id, item) {
@@ -42,6 +42,6 @@ var appTodo = {
         appTodo.getDataFromPersistence();
         var resultTodo = _.findWhere(data, {id: id});
         _.extend(resultTodo, item);
-        appTodo.persistData(data);
+        appTodo.persistData(resultTodo);
     }
 }

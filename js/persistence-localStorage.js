@@ -1,15 +1,15 @@
 /**
  * Created by msimion on 10/12/2015.
  */
-var persistence = {
+function Persistence () {
 
-    getData: function () {
+    this.getData = function () {
         
         return data = JSON.parse(localStorage.getItem("todoData"));
 
-    },
+    };
 
-    updateData: function (data) {
+    this.updateData = function (data) {
         var dataStored = JSON.stringify(data);
         localStorage.setItem("todoData", dataStored);
     }
