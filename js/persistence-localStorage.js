@@ -1,7 +1,7 @@
 /**
  * Created by msimion on 10/12/2015.
  */
-function Persistence() {
+function Persistence () {
 
     this.getData = function () {
 
@@ -9,7 +9,7 @@ function Persistence() {
 
     };
 
-    this.updateData = function(data) {
+    this.updateData = function (data) {
         var dataStored = JSON.stringify(data);
         localStorage.setItem("todoData", dataStored);
     }

@@ -1,10 +1,10 @@
 var app = {
 
-    var: ENTER_KEY_CODE = 13,
-    var: BACKSPACE_KEY_CODE = 8,
+    ENTER_KEY_CODE: 13,
+    BACKSPACE_KEY_CODE: 8,
 
     readData: function () {
-        var data = persistence.getData();
+        appTodo.getDataFromPersistence();
         $.each(data, function (index, params) {
             if (data[index] != null) {
                 app.generateElement(params);
@@ -75,7 +75,7 @@ var app = {
 
         $(document).keypress(function (event) {
 
-            if (event.which == ENTER_KEY_CODE) {
+            if (event.which == app.ENTER_KEY_CODE) {
 
                 if ($("#new-todo").val().length == 0) {
                     $.alert({
@@ -102,7 +102,7 @@ var app = {
 
             if (charactersLeft == 0) {
                 $("#new-todo").keydown(function (event) {
-                    if (event.which != BACKSPACE_KEY_CODE && event.which != ENTER_KEY_CODE) {
+                    if (event.which != app.BACKSPACE_KEY_CODE && event.which != app.ENTER_KEY_CODE) {
                         return false;
                     }
                 });
