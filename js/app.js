@@ -1,9 +1,9 @@
 var app = {
 
-    var: data = [],
+    data: [],
 
-    var: ENTER_KEY_CODE = 13,
-    var: BACKSPACE_KEY_CODE = 8,
+    ENTER_KEY_CODE : 13,
+    BACKSPACE_KEY_CODE: 8,
 
     readData: function () {
         data = JSON.parse(localStorage.getItem("todoData"));
@@ -20,6 +20,16 @@ var app = {
         this.addEvents();
         this.readData();
         this.updateTodo();
+        $(".all").on("click", function () {
+            app.allClick();
+        });
+        $(".active").on("click", function () {
+            app.activeClick();
+        });
+        $(".clear-completed").on("click", function () {
+            app.deleteCompleted();
+        });
+
     },
 
     checkedInput: function (index, params) {
