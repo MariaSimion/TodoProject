@@ -4,19 +4,27 @@
 var appTodo = {
 
     data: [],
+    persistenceUnit: new Persistence(),
+
+    getDataFromPersistence: function () {
+        appTodo.persistenceUnit.getData();
+    },
+
+    persistData: function (data) {
+        appTodo.persistenceUnit.updateData(data);
+    },
 
     add: function (test) {
 
         var tempData = new todo(test);
         data.push(tempData);
 
-        persistence.updateData(data);
-
+        appTodo.persistData(data);
     },
 
-    getTodo: function (param) {
+    findTodos: function (param) {
 
-        persistence.getData();
+        appTodo.getDataFromPersistence();
         var result = _.where(data, param);
         return result;
 
@@ -24,17 +32,16 @@ var appTodo = {
 
     deleteItems: function (param) {
 
-        persistence.getData();
+        appTodo.getDataFromPersistence();
         var result = _.reject(data, param);
-        persistence.updateData(result);
+        appTodo.persistData(data);
     },
 
     update: function (id, item) {
 
-        persistence.getData();
+        appTodo.getDataFromPersistence();
         var resultTodo = _.findWhere(data, {id: id});
         _.extend(resultTodo, item);
-        persistence.updateData(data);
-
+        appTodo.persistData(data);
     }
 }
