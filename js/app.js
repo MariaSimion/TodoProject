@@ -1,12 +1,10 @@
 var app = {
 
-    data: [],
-
-    ENTER_KEY_CODE : 13,
-    BACKSPACE_KEY_CODE: 8,
+    var: ENTER_KEY_CODE = 13,
+    var: BACKSPACE_KEY_CODE = 8,
 
     readData: function () {
-        data = JSON.parse(localStorage.getItem("todoData"));
+        var data = persistence.getData();
         $.each(data, function (index, params) {
             if (data[index] != null) {
                 app.generateElement(params);
@@ -25,6 +23,9 @@ var app = {
         });
         $(".active").on("click", function () {
             app.activeClick();
+        });
+        $(".completed").on("click", function () {
+            app.completedClick();
         });
         $(".clear-completed").on("click", function () {
             app.deleteCompleted();
@@ -161,9 +162,9 @@ var app = {
         $.each(data, function (index, params) {
             $("#" + params.id).change(function () {
                 if ($('#' + params.id).is(':checked')) {
-                    appTodo.update(id, {completed: true});
+                    appTodo.update(params.id, {completed: true});
                 } else {
-                    appTodo.update(id, {completed: false});
+                    appTodo.update(params.id, {completed: false});
                 }
             })
         });

@@ -3,8 +3,8 @@
  */
 var persistence = {
 
-    getData: function (data) {
-
+    getData: function () {
+        
         return data = JSON.parse(localStorage.getItem("todoData"));
 
     },
