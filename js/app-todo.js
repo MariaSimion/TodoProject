@@ -10,14 +10,13 @@ var appTodo = {
         var tempData = new todo(test);
         data.push(tempData);
 
-        var dataStored = JSON.stringify(data);
-        localStorage.setItem("todoData", dataStored);
+        persistence.updateData(data);
 
     },
 
     getTodo: function (param) {
 
-        data = JSON.parse(localStorage.getItem("todoData"));
+        persistence.getData();
         var result = _.where(data, param);
         return result;
 
@@ -25,21 +24,17 @@ var appTodo = {
 
     deleteItems: function (param) {
 
-        data = JSON.parse(localStorage.getItem("todoData"));
+        persistence.getData();
         var result = _.reject(data, param);
-        console.log(result);
-        var dataStored = JSON.stringify(result);
-        localStorage.setItem("todoData", dataStored);
-
+        persistence.updateData(result);
     },
 
     update: function (id, item) {
 
-        data = JSON.parse(localStorage.getItem("todoData"));
+        persistence.getData();
         var resultTodo = _.findWhere(data, {id: id});
         _.extend(resultTodo, item);
-        var dataStored = JSON.stringify(data);
-        localStorage.setItem("todoData", dataStored);
+        persistence.updateData(data);
 
     }
 }
