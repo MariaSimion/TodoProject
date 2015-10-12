@@ -115,18 +115,14 @@ var app = {
 
         var name = $("#new-todo").val();
         var tempData = new todo(name);
-
-        //saving element in local storage
-        data.push(tempData);
-
-        var dataStored = JSON.stringify(data);
-        localStorage.setItem("todoData", dataStored);
+        appTodo.add(name);
 
         //generate Todo item
         app.generateElement(tempData);
         app.updateTodo();
-    }
-    , allClick: function () {
+    },
+
+    allClick: function () {
         $("#todo-list").empty();
         $.each(data, function (index, params) {
             app.generateElement(params);
@@ -154,15 +150,7 @@ var app = {
     },
 
     deleteCompleted: function () {
-        var result = [];
-        $.each(data, function (index, params) {
-            console.log(data[index].completed);
-            if (data[index].completed == false) {
-                result.push(data[index]);
-            }
-        });
-        var dataStored = JSON.stringify(result);
-        localStorage.setItem("todoData", dataStored);
+        appTodo.deleteItems({completed: true});
         $("#todo-list").empty();
         this.readData();
         app.updateTodo();
@@ -173,13 +161,9 @@ var app = {
         $.each(data, function (index, params) {
             $("#" + params.id).change(function () {
                 if ($('#' + params.id).is(':checked')) {
-                    data[index].completed = true;
-                    var dataStored = JSON.stringify(data);
-                    localStorage.setItem("todoData", dataStored);
+                    appTodo.update(id, {completed: true});
                 } else {
-                    data[index].completed = false;
-                    var dataStored = JSON.stringify(data);
-                    localStorage.setItem("todoData", dataStored);
+                    appTodo.update(id, {completed: false});
                 }
             })
         });
