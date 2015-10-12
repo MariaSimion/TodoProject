@@ -15,52 +15,31 @@ var appTodo = {
 
     },
 
-    getTodoWhoIsntCompleted: function () {
-        var resultData = [];
+    getTodo: function (param) {
+
         data = JSON.parse(localStorage.getItem("todoData"));
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].completed == false) {
-                resultData.push(data[i]);
-            }
-        }
-        return resultData;
+        var result = _.where(data, param);
+        return result;
+
     },
 
-    getTodoWhoIsCompleted: function () {
-        var resultData = [];
+    deleteItems: function (param) {
+
         data = JSON.parse(localStorage.getItem("todoData"));
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].completed == true) {
-                resultData.push(data[i]);
-            }
-        }
-        return resultData;
-    },
-
-    deleteItems: function () {
-
-        var result = appTodo.getTodoWhoIsntCompleted();
+        var result = _.reject(data, param);
+        console.log(result);
         var dataStored = JSON.stringify(result);
         localStorage.setItem("todoData", dataStored);
 
     },
 
-    update: function (items, state) {
+    update: function (id, item) {
+
         data = JSON.parse(localStorage.getItem("todoData"));
-        for (var i = 0; i < data.length; i++) {
-            if (_.isEqual(data[i], items)) {
-                if (data[i].completed != state) {
-                    if (state == false) {
-                        data[i].completed = false;
-                        var dataStored = JSON.stringify(data);
-                        localStorage.setItem("todoData", dataStored);
-                    } else {
-                        data[i].completed = true;
-                        var dataStored = JSON.stringify(data);
-                        localStorage.setItem("todoData", dataStored);
-                    }
-                }
-            }
-        }
+        var resultTodo = _.findWhere(data, {id: id});
+        _.extend(resultTodo, item);
+        var dataStored = JSON.stringify(data);
+        localStorage.setItem("todoData", dataStored);
+
     }
 }

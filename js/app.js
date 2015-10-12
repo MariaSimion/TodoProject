@@ -140,7 +140,7 @@ var app = {
     },
 
     deleteCompleted: function () {
-        appTodo.deleteItems();
+        appTodo.deleteItems({completed: true});
         $("#todo-list").empty();
         this.readData();
         app.updateTodo();
@@ -151,13 +151,9 @@ var app = {
         $.each(data, function (index, params) {
             $("#" + params.id).change(function () {
                 if ($('#' + params.id).is(':checked')) {
-                    data[index].completed = true;
-                    var dataStored = JSON.stringify(data);
-                    localStorage.setItem("todoData", dataStored);
+                    appTodo.update(id, {completed: true});
                 } else {
-                    data[index].completed = false;
-                    var dataStored = JSON.stringify(data);
-                    localStorage.setItem("todoData", dataStored);
+                    appTodo.update(id, {completed: false});
                 }
             })
         });
