@@ -7,41 +7,47 @@ var appTodo = {
     persistenceUnit: new Persistence(),
 
     getDataFromPersistence: function () {
-        appTodo.persistenceUnit.getData();
+        if (this.data == null) {
+            this.data = [];
+        } else {
+            this.data = appTodo.persistenceUnit.getData();
+        }
+        console.log(this.data);
     },
 
     persistData: function (data) {
         appTodo.persistenceUnit.updateData(data);
     },
 
-    add: function (test) {
+    add: function (param) {
 
-        var tempData = new todo(test);
-        data.push(tempData);
+        var tempData = new todo(param);
+        console.log(tempData);
+        console.log(this.data);
+        this.data.push(tempData);
 
-        appTodo.persistData(data);
+        appTodo.persistData(this.data);
     },
 
     findTodos: function (param) {
 
-        appTodo.getDataFromPersistence();
-        var result = _.where(data, param);
+        var result = _.where(this.data, param);
         return result;
 
     },
 
     deleteItems: function (param) {
 
-        appTodo.getDataFromPersistence();
-        var result = _.reject(data, param);
+        var result = _.reject(this.data, param);
         appTodo.persistData(result);
     },
 
     update: function (id, item) {
 
-        appTodo.getDataFromPersistence();
-        var resultTodo = _.findWhere(data, {id: id});
-        _.extend(resultTodo, item);
-        appTodo.persistData(resultTodo);
+        var resultTodo = _.findWhere(this.data, {id: id});
+        console.log(resultTodo);
+        var result = _.extend(resultTodo, item);
+        console.log(this.data);
+        appTodo.persistData(this.data);
     }
 }
