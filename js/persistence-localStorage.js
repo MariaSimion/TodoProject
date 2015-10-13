@@ -4,8 +4,9 @@
 function Persistence () {
 
     this.getData = function () {
-        
-        return data = JSON.parse(localStorage.getItem("todoData"));
+
+        //console.log(JSON.parse(localStorage.getItem("todoData")));
+        return JSON.parse(localStorage.getItem("todoData"));
 
     };
 
