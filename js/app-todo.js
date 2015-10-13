@@ -7,10 +7,10 @@ var appTodo = {
     persistenceUnit: new Persistence(),
 
     getDataFromPersistence: function () {
+
+        this.data = appTodo.persistenceUnit.getData();
         if (this.data == null) {
             this.data = [];
-        } else {
-            this.data = appTodo.persistenceUnit.getData();
         }
         console.log(this.data);
     },
