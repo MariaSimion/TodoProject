@@ -22,10 +22,7 @@ var appTodo = {
     add: function (param) {
 
         var tempData = new todo(param);
-        console.log(tempData);
-        console.log(this.data);
         this.data.push(tempData);
-
         appTodo.persistData(this.data);
     },
 
@@ -45,9 +42,12 @@ var appTodo = {
     update: function (id, item) {
 
         var resultTodo = _.findWhere(this.data, {id: id});
+        console.log(33);
         console.log(resultTodo);
         var result = _.extend(resultTodo, item);
-        console.log(this.data);
+        console.log(item);
+        console.log(result);
         appTodo.persistData(this.data);
+        return result;
     }
 }
