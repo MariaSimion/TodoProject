@@ -19,6 +19,7 @@ var app = {
         this.addEvents();
         this.readData();
         this.updateTodo();
+
         $(".all").on("click", function () {
             app.allClick();
         });
@@ -32,12 +33,40 @@ var app = {
             app.deleteCompleted();
         });
 
+        var item;
+
+        $("label").on("click", function (e) {
+            $(e.target).prop('contenteditable', true);
+            var obj = {};
+            obj.name = $(e.target).text();
+            item = appTodo.findTodos(obj);
+        }).on("blur", function (e) {
+            var result = {};
+            result.name = $(e.target).text();
+            if (app.checkIfInputIsEmpty(result.name) == false) {
+                $.alert({
+                    icon: 'glyphicon glyphicon-warning-sign',
+                    theme: 'white',
+                    title: 'Warning',
+                    content: 'You must write something!'
+                });
+            } else {
+                appTodo.update(item[0].id, result);
+            }
+        });
     },
 
     checkedInput: function (index, params) {
         if (appTodo.data[index].completed == true) {
             $("#" + params.id).prop('checked', true);
         }
+    },
+
+    checkIfInputIsEmpty: function (param) {
+        if (param.length == 0) {
+            return false;
+        }
+        return true;
     },
 
     generateElement: function (params) {
@@ -70,14 +99,12 @@ var app = {
     addEvents: function () {
 
         $("#footer").hide();
-
         var post = new todo($("#new-todo").val());
-
         $(document).keypress(function (event) {
 
             if (event.which == app.ENTER_KEY_CODE) {
 
-                if ($("#new-todo").val().length == 0) {
+                if (app.checkIfInputIsEmpty(post)) {
                     $.alert({
                         icon: 'glyphicon glyphicon-warning-sign',
                         theme: 'white',
@@ -85,7 +112,6 @@ var app = {
                         content: 'You must write something!'
                     });
                 } else {
-
                     app.addTodo();
 
                     $("#new-todo").val("");
@@ -113,7 +139,6 @@ var app = {
     },
 
     addTodo: function () {
-
         var name = $("#new-todo").val();
         var tempData = new todo(name);
         appTodo.add(name);
