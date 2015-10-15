@@ -112,8 +112,8 @@ var app = {
         $(document).keypress(function (event) {
 
             if (event.which == app.ENTER_KEY_CODE) {
-
-                if (app.checkIfInputIsEmpty(post)) {
+                console.log(post);
+                if (app.checkIfInputIsEmpty(post) == false) {
                     $.alert({
                         icon: 'glyphicon glyphicon-warning-sign',
                         theme: 'white',
