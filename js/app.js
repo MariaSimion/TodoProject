@@ -37,10 +37,11 @@ var app = {
 
         $("label").on("click", function (e) {
             $(e.target).prop('contenteditable', true);
-            var obj = {};
-            obj.name = $(e.target).text();
-            item = appTodo.findTodos(obj);
         }).on("blur", function (e) {
+            var obj = {};
+            obj.id = $(e.target).data("id");
+            item = appTodo.findTodos(obj);
+            console.log(item);
             var result = {};
             result.name = $(e.target).text();
             if (app.checkIfInputIsEmpty(result.name) == false) {
@@ -49,6 +50,13 @@ var app = {
                     theme: 'white',
                     title: 'Warning',
                     content: 'You must write something!'
+                });
+            } else if (item[0].name === result.name) {
+                $.alert({
+                    icon: 'glyphicon glyphicon-warning-sign',
+                    theme: 'white',
+                    title: 'Warning',
+                    content: 'Nothing was changed!'
                 });
             } else {
                 appTodo.update(item[0].id, result);
@@ -78,6 +86,7 @@ var app = {
 
         var label = $(document.createElement('label'));
         label.text(params.name);
+        label.data("id", params.id);
 
         var div = $(document.createElement('div'));
         div.prop('class', 'line');
